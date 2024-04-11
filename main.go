@@ -5,19 +5,22 @@ import (
 	"os"
 )
 
-//TODO Link Struct
+type Link struct {
+	Href string
+	Text string
+}
 
-//TODO loadHTML
+// TODO loadHTML
 func loadHTML(name string) os.File {
 	return os.File{}
 }
 
-//TODO parseHTML
+// TODO parseHTML
 func parseHTML(f os.File) {
 
 }
 
-//TODO unmarshallHTML
+// TODO unmarshallHTML
 func unmarshallHTML() {
 
 }
