@@ -35,9 +35,11 @@ func parseHTML(file string) []Link {
 func buildSlice(n *html.Node, depth int, sl *[]Link) {
 	if n.Type == html.ElementNode {
 		if n.DataAtom.String() == "a" {
+			text := strings.TrimSpace(n.FirstChild.Data)
+			text = strings.TrimRight(text, "\n")
 			l := Link{
 				Href: n.Attr[0].Val,
-				Text: n.FirstChild.Data,
+				Text: text,
 			}
 			*sl = append(*sl, l)
 		}
@@ -49,7 +51,7 @@ func buildSlice(n *html.Node, depth int, sl *[]Link) {
 }
 
 func main() {
-	file := loadHTML("ex4.html")
+	file := loadHTML("ex3.html")
 	links := parseHTML(file)
 	for _, l := range links {
 		fmt.Printf("Href: %s \n", l.Href)
