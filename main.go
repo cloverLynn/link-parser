@@ -65,6 +65,9 @@ func getAllChildrenNodes(n *html.Node) []string {
 }
 
 func pullText(n *html.Node) string {
+	if n.Type == html.CommentNode {
+		return ""
+	}
 	if n.Type == html.ElementNode {
 		if n.FirstChild != nil {
 			return strings.TrimRight(strings.TrimSpace(n.FirstChild.Data), "\n")
@@ -78,7 +81,7 @@ func pullText(n *html.Node) string {
 }
 
 func main() {
-	file := loadHTML("ex3.html")
+	file := loadHTML("ex4.html")
 	links := parseHTML(file)
 	for _, l := range links {
 		fmt.Printf("Href: %s \n", l.Href)
