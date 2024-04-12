@@ -35,7 +35,7 @@ func parseHTML(file string) []Link {
 func buildSlice(n *html.Node, depth int, sl *[]Link) {
 	if n.Type == html.ElementNode {
 		if n.DataAtom.String() == "a" {
-			fmt.Println(getAllChildrenNodes(n))
+			getAllChildrenNodes(n)
 			text := strings.TrimSpace(n.FirstChild.Data)
 			text = strings.TrimRight(text, "\n")
 			l := Link{
@@ -57,6 +57,7 @@ func getAllChildrenNodes(n *html.Node) []html.Node {
 	currentChild := n.FirstChild
 	for hasSibling == true {
 		if currentChild.NextSibling != nil {
+			fmt.Println(pullText(currentChild))
 			children = append(children, *currentChild)
 			currentChild = currentChild.NextSibling
 		} else {
@@ -65,6 +66,14 @@ func getAllChildrenNodes(n *html.Node) []html.Node {
 	}
 
 	return children
+}
+
+func pullText(n *html.Node) string {
+	if n.Type == html.ElementNode {
+		return strings.TrimRight(strings.TrimSpace(n.FirstChild.Data), "\n")
+	} else {
+		return strings.TrimRight(strings.TrimSpace(n.Data), "\n")
+	}
 }
 
 func main() {
