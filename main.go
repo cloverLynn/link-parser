@@ -35,6 +35,7 @@ func parseHTML(file string) []Link {
 func buildSlice(n *html.Node, depth int, sl *[]Link) {
 	if n.Type == html.ElementNode {
 		if n.DataAtom.String() == "a" {
+			fmt.Println(getAllChildrenNodes(n))
 			text := strings.TrimSpace(n.FirstChild.Data)
 			text = strings.TrimRight(text, "\n")
 			l := Link{
@@ -50,11 +51,27 @@ func buildSlice(n *html.Node, depth int, sl *[]Link) {
 	}
 }
 
+func getAllChildrenNodes(n *html.Node) []html.Node {
+	var children []html.Node
+	hasSibling := true
+	currentChild := n.FirstChild
+	for hasSibling == true {
+		if currentChild.NextSibling != nil {
+			children = append(children, *currentChild)
+			currentChild = currentChild.NextSibling
+		} else {
+			hasSibling = false
+		}
+	}
+
+	return children
+}
+
 func main() {
-	file := loadHTML("ex3.html")
-	links := parseHTML(file)
-	for _, l := range links {
+	file := loadHTML("ex5.html")
+	parseHTML(file)
+	/*for _, l := range links {
 		fmt.Printf("Href: %s \n", l.Href)
 		fmt.Printf("Text: %s \n", l.Text)
-	}
+	}*/
 }
